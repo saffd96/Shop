@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ShopDbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ShopDbModelStoreContainer">
+    <EntitySet Name="Shops" EntityType="ShopDbModel.Store.Shops" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Products" EntityType="ShopDbModel.Store.Products" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="ShopDbModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderItems" EntityType="ShopDbModel.Store.OrderItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoppingCarts" EntityType="ShopDbModel.Store.ShoppingCarts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Managers" EntityType="ShopDbModel.Store.Managers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Buyers" EntityType="ShopDbModel.Store.Buyers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShoppingCartItems" EntityType="ShopDbModel.Store.ShoppingCartItems" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="OrderBuyer" Association="ShopDbModel.Store.OrderBuyer">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="Buyer" EntitySet="Buyers" />
+    </AssociationSet>
+    <AssociationSet Name="ShoppingCartBuyer" Association="ShopDbModel.Store.ShoppingCartBuyer">
+      <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+      <End Role="Buyer" EntitySet="Buyers" />
+    </AssociationSet>
+    <AssociationSet Name="OrderItemProduct" Association="ShopDbModel.Store.OrderItemProduct">
+      <End Role="OrderItem" EntitySet="OrderItems" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="OrderItemOrder" Association="ShopDbModel.Store.OrderItemOrder">
+      <End Role="OrderItem" EntitySet="OrderItems" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="ShoppingCartItemShoppingCart" Association="ShopDbModel.Store.ShoppingCartItemShoppingCart">
+      <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+    </AssociationSet>
+    <AssociationSet Name="ShoppingCartItemProduct" Association="ShopDbModel.Store.ShoppingCartItemProduct">
+      <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="ShopProduct" Association="ShopDbModel.Store.ShopProduct">
+      <End Role="Shop" EntitySet="Shops" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Shops">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Shop_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="BuyerId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DateOfOrder" Type="datetime" Nullable="false" />
+    <Property Name="Buyer_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Product_Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Order_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoppingCarts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Capasity" Type="int" Nullable="false" DefaultValue="50" />
+    <Property Name="Buyer_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Managers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" Nullable="false" DefaultValue="менеджер" MaxLength="16" />
+    <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="16" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Buyers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" Nullable="false" DefaultValue="покупатель" MaxLength="16" />
+    <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="16" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Adress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+    <Property Name="DateOfRegister" Type="datetime" Nullable="false" />
+    <Property Name="ShoppingCartId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShoppingCartItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ShoppingCartId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="ShoppingCart_Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Product_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="OrderBuyer">
+    <End Role="Order" Type="ShopDbModel.Store.Orders" Multiplicity="*" />
+    <End Role="Buyer" Type="ShopDbModel.Store.Buyers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Buyer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Buyer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ShoppingCartBuyer">
+    <End Role="ShoppingCart" Type="ShopDbModel.Store.ShoppingCarts" Multiplicity="*" />
+    <End Role="Buyer" Type="ShopDbModel.Store.Buyers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Buyer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="Buyer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OrderItemProduct">
+    <End Role="OrderItem" Type="ShopDbModel.Store.OrderItems" Multiplicity="*" />
+    <End Role="Product" Type="ShopDbModel.Store.Products" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OrderItemOrder">
+    <End Role="OrderItem" Type="ShopDbModel.Store.OrderItems" Multiplicity="*" />
+    <End Role="Order" Type="ShopDbModel.Store.Orders" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="Order_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ShoppingCartItemShoppingCart">
+    <End Role="ShoppingCartItem" Type="ShopDbModel.Store.ShoppingCartItems" Multiplicity="*" />
+    <End Role="ShoppingCart" Type="ShopDbModel.Store.ShoppingCarts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ShoppingCart">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCartItem">
+        <PropertyRef Name="ShoppingCart_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ShoppingCartItemProduct">
+    <End Role="ShoppingCartItem" Type="ShopDbModel.Store.ShoppingCartItems" Multiplicity="*" />
+    <End Role="Product" Type="ShopDbModel.Store.Products" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCartItem">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ShopProduct">
+    <End Role="Shop" Type="ShopDbModel.Store.Shops" Multiplicity="1" />
+    <End Role="Product" Type="ShopDbModel.Store.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="Shop_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ShopDbModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ShopDbModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Shops" EntityType="ShopDbModel.Shop" />
+          <EntitySet Name="Products" EntityType="ShopDbModel.Product" />
+          <EntitySet Name="Orders" EntityType="ShopDbModel.Order" />
+          <EntitySet Name="OrderItems" EntityType="ShopDbModel.OrderItem" />
+          <EntitySet Name="ShoppingCarts" EntityType="ShopDbModel.ShoppingCart" />
+          <EntitySet Name="Managers" EntityType="ShopDbModel.Manager" />
+          <EntitySet Name="Buyers" EntityType="ShopDbModel.Buyer" />
+          <AssociationSet Name="OrderBuyer" Association="ShopDbModel.OrderBuyer">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Buyer" EntitySet="Buyers" />
+          </AssociationSet>
+          <AssociationSet Name="ShoppingCartBuyer" Association="ShopDbModel.ShoppingCartBuyer">
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+            <End Role="Buyer" EntitySet="Buyers" />
+          </AssociationSet>
+          <AssociationSet Name="OrderItemProduct" Association="ShopDbModel.OrderItemProduct">
+            <End Role="OrderItem" EntitySet="OrderItems" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="OrderItemOrder" Association="ShopDbModel.OrderItemOrder">
+            <End Role="OrderItem" EntitySet="OrderItems" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="ShoppingCartItems" EntityType="ShopDbModel.ShoppingCartItem" />
+          <AssociationSet Name="ShoppingCartItemShoppingCart" Association="ShopDbModel.ShoppingCartItemShoppingCart">
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+          </AssociationSet>
+          <AssociationSet Name="ShoppingCartItemProduct" Association="ShopDbModel.ShoppingCartItemProduct">
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="ShopProduct" Association="ShopDbModel.ShopProduct">
+            <End Role="Shop" EntitySet="Shops" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="ShopDbModel.ShopProduct" FromRole="Shop" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Buyer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" Unicode="true" DefaultValue="покупатель" MaxLength="16" FixedLength="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Surname" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Adress" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateOfRegister" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ShoppingCartId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="ShopDbModel.OrderBuyer" FromRole="Buyer" ToRole="Order" />
+          <NavigationProperty Name="ShoppingCart" Relationship="ShopDbModel.ShoppingCartBuyer" FromRole="Buyer" ToRole="ShoppingCart" />
+        </EntityType>
+        <EntityType Name="Manager" >
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" DefaultValue="менеджер" Unicode="true" MaxLength="16" FixedLength="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Surname" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" Unicode="true" MaxLength="32" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="OrderItem" Relationship="ShopDbModel.OrderItemProduct" FromRole="Product" ToRole="OrderItem" />
+          <NavigationProperty Name="ShoppingCartItem" Relationship="ShopDbModel.ShoppingCartItemProduct" FromRole="Product" ToRole="ShoppingCartItem" />
+          <NavigationProperty Name="Shop" Relationship="ShopDbModel.ShopProduct" FromRole="Product" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="BuyerId" Type="Guid" Nullable="false" />
+          <Property Name="DateOfOrder" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Buyer" Relationship="ShopDbModel.OrderBuyer" FromRole="Order" ToRole="Buyer" />
+          <NavigationProperty Name="OrderItem" Relationship="ShopDbModel.OrderItemOrder" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="ProductId" Type="Guid" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="ShopDbModel.OrderItemProduct" FromRole="OrderItem" ToRole="Product" />
+          <Property Name="OrderId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="ShopDbModel.OrderItemOrder" FromRole="OrderItem" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Capasity" Type="Int32" Nullable="false" DefaultValue="50" />
+          <NavigationProperty Name="Buyer" Relationship="ShopDbModel.ShoppingCartBuyer" FromRole="ShoppingCart" ToRole="Buyer" />
+          <NavigationProperty Name="ShoppingCartItem" Relationship="ShopDbModel.ShoppingCartItemShoppingCart" FromRole="ShoppingCart" ToRole="ShoppingCartItem" />
+        </EntityType>
+        <Association Name="OrderBuyer">
+          <End Type="ShopDbModel.Order" Role="Order" Multiplicity="*" />
+          <End Type="ShopDbModel.Buyer" Role="Buyer" Multiplicity="1" />
+        </Association>
+        <Association Name="ShoppingCartBuyer">
+          <End Type="ShopDbModel.ShoppingCart" Role="ShoppingCart" Multiplicity="1" />
+          <End Type="ShopDbModel.Buyer" Role="Buyer" Multiplicity="1" />
+        </Association>
+        <Association Name="OrderItemProduct">
+          <End Type="ShopDbModel.OrderItem" Role="OrderItem" Multiplicity="1" />
+          <End Type="ShopDbModel.Product" Role="Product" Multiplicity="1" />
+        </Association>
+        <Association Name="OrderItemOrder">
+          <End Type="ShopDbModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <End Type="ShopDbModel.Order" Role="Order" Multiplicity="1" />
+        </Association>
+        <EntityType Name="ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="ShoppingCartId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ShoppingCart" Relationship="ShopDbModel.ShoppingCartItemShoppingCart" FromRole="ShoppingCartItem" ToRole="ShoppingCart" />
+          <Property Name="ProductID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="ShopDbModel.ShoppingCartItemProduct" FromRole="ShoppingCartItem" ToRole="Product" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ShoppingCartItemShoppingCart">
+          <End Type="ShopDbModel.ShoppingCartItem" Role="ShoppingCartItem" Multiplicity="*" />
+          <End Type="ShopDbModel.ShoppingCart" Role="ShoppingCart" Multiplicity="1" />
+        </Association>
+        <Association Name="ShoppingCartItemProduct">
+          <End Type="ShopDbModel.ShoppingCartItem" Role="ShoppingCartItem" Multiplicity="1" />
+          <End Type="ShopDbModel.Product" Role="Product" Multiplicity="1" />
+        </Association>
+        <Association Name="ShopProduct">
+          <End Type="ShopDbModel.Shop" Role="Shop" Multiplicity="1" />
+          <End Type="ShopDbModel.Product" Role="Product" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShopDbModelStoreContainer" CdmEntityContainer="ShopDbModelContainer">
+    <EntitySetMapping Name="Shops">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.Shop)">
+        <MappingFragment StoreEntitySet="Shops">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.Product)">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+          <ScalarProperty Name="DateOfOrder" ColumnName="DateOfOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderItems">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.OrderItem)">
+        <MappingFragment StoreEntitySet="OrderItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShoppingCarts">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.ShoppingCart)">
+        <MappingFragment StoreEntitySet="ShoppingCarts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Capasity" ColumnName="Capasity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Managers">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.Manager)">
+        <MappingFragment StoreEntitySet="Managers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Buyers">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.Buyer)">
+        <MappingFragment StoreEntitySet="Buyers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="DateOfRegister" ColumnName="DateOfRegister" />
+          <ScalarProperty Name="ShoppingCartId" ColumnName="ShoppingCartId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShoppingCartItems">
+      <EntityTypeMapping TypeName="IsTypeOf(ShopDbModel.ShoppingCartItem)">
+        <MappingFragment StoreEntitySet="ShoppingCartItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ShoppingCartId" ColumnName="ShoppingCartId" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="OrderBuyer" TypeName="ShopDbModel.OrderBuyer" StoreEntitySet="Orders">
+      <EndProperty Name="Buyer">
+        <ScalarProperty Name="Id" ColumnName="Buyer_Id" />
+      </EndProperty>
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShoppingCartBuyer" TypeName="ShopDbModel.ShoppingCartBuyer" StoreEntitySet="ShoppingCarts">
+      <EndProperty Name="Buyer">
+        <ScalarProperty Name="Id" ColumnName="Buyer_Id" />
+      </EndProperty>
+      <EndProperty Name="ShoppingCart">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OrderItemProduct" TypeName="ShopDbModel.OrderItemProduct" StoreEntitySet="OrderItems">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="OrderItem">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OrderItemOrder" TypeName="ShopDbModel.OrderItemOrder" StoreEntitySet="OrderItems">
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Order_Id" />
+      </EndProperty>
+      <EndProperty Name="OrderItem">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShoppingCartItemShoppingCart" TypeName="ShopDbModel.ShoppingCartItemShoppingCart" StoreEntitySet="ShoppingCartItems">
+      <EndProperty Name="ShoppingCart">
+        <ScalarProperty Name="Id" ColumnName="ShoppingCart_Id" />
+      </EndProperty>
+      <EndProperty Name="ShoppingCartItem">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShoppingCartItemProduct" TypeName="ShopDbModel.ShoppingCartItemProduct" StoreEntitySet="ShoppingCartItems">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="ShoppingCartItem">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShopProduct" TypeName="ShopDbModel.ShopProduct" StoreEntitySet="Products">
+      <EndProperty Name="Shop">
+        <ScalarProperty Name="Id" ColumnName="Shop_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
