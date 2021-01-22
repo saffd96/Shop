@@ -26,6 +26,7 @@ namespace Shop.BLL.Services
             {
                 ShoppingCartItem shoppingCartItemDb = new ShoppingCartItem
                 {
+                    //ssss
                     ShoppingCartId = CurrentShoppingCartItem.ShoppingCartId,
                     Count = CurrentShoppingCartItem.Count,
                     ProductID = CurrentShoppingCartItem.ProductId
