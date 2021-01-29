@@ -27,7 +27,7 @@ namespace Shop.Models
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public string Adress { get; set; }
-        public System.DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public System.DateTime DateOfRegister { get; set; }
         public System.Guid ShoppingCartId { get; set; }
     

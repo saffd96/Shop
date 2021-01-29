@@ -98,7 +98,7 @@ namespace Shop
             Console.Write("Введиите адрес: ");
             buyer.Adress = Console.ReadLine();
             Console.Write("Введиите дату рождения: ");
-            buyer.DateOfBirth = DateTime.Parse(Console.ReadLine());
+            buyer.DateOfBirth = Console.ReadLine();
 
             Console.Clear();
 
