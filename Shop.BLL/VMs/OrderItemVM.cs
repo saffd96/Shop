@@ -8,7 +8,8 @@ namespace Shop.BLL.VMs
 {
     public class OrderItemVM
     {
-        public Guid ProductID { get; set; }
+        public Guid ProductId { get; set; }
         public int Count { get; set; }
+        public Guid Id { get; set; }
     }
 }

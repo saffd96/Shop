@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleHelper.cs" />
     <Compile Include="DbFiles\Buyer.cs">
       <DependentUpon>ShopDbModel.tt</DependentUpon>
     </Compile>
@@ -122,6 +123,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Shop.BLL\Shop.BLL.csproj">
+      <Project>{b1b77629-789b-473e-808c-eb40a382a6b6}</Project>
+      <Name>Shop.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shop.Models\Shop.Models.csproj">
       <Project>{f530c54e-db2f-4125-bc6e-5556614d29aa}</Project>
       <Name>Shop.Models</Name>

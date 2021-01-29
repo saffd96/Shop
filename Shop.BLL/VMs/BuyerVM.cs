@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.BLL.VMs
 {
-    class BuyerVM
+    public class BuyerVM
     {
         public string Login { get; set; }
         public string PasswordHash { get; set; }

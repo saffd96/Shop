@@ -5,13 +5,14 @@ using Shop.DAL;
 using Shop.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Shop.BLL.Services
 {
-    class OrderService : IOrderService
+    public class OrderService : IOrderService
     {
         private ShopDbModelContainer db;
         public OrderService()
@@ -26,7 +27,7 @@ namespace Shop.BLL.Services
                 Order orderDb = new Order
                 {
                     BuyerId = CurrentUser.Id,
-                    DateOfOrder = DateTime.Now,
+                    DateOfOrder = DateTime.Now
                 };
 
                 db.Orders.Add(orderDb);
@@ -39,18 +40,22 @@ namespace Shop.BLL.Services
             }
         }
 
-        public bool DeleteOrder(Guid id)   //!!!!!!!!!
+        public bool DeleteOrder(Guid id)
         {
             try
             {
-                Order orderDb = new Order
+                var orderDb = db.Orders.Find(id);
+                if (orderDb == null)
                 {
-                    Id = CurrentOrder.Id,
-                };
+                    throw new Exception("Заказ не найден");
+                }
+                else 
+                {
+                    db.Orders.Remove(orderDb);
+                    db.SaveChanges();
+                    return true;
+                }
 
-                db.Orders.Remove(orderDb);
-                db.SaveChanges();
-                return true;
             }
             catch
             {
@@ -60,13 +65,35 @@ namespace Shop.BLL.Services
 
         public OrderVM GetOrderById(Guid id)
         {
-            throw new NotImplementedException();
+            var orderDb = db.Orders.Find(id);
+            if (orderDb == null)
+            {
+                throw new Exception("Заказ не найден");
+            }
+            else
+            { 
+                return new OrderVM { BuyerId = orderDb.BuyerId, DateOfOrder = orderDb.DateOfOrder };
+            }
         }
 
-        public OrderVM UpdateOrder(Guid buyerId)
+        public List<OrderListItemVM> GetOrdersListByUserId(Guid id)
         {
-            throw new NotImplementedException();
+            var orderList = db.Orders.Where(m => m.BuyerId.Equals(CurrentUser.Id)).ToList();
+            if (orderList.Any())
+            {
+                var resultList = new List<OrderListItemVM>();
+                foreach (var orderDb in orderList)
+                {
+                    resultList.Add(new OrderListItemVM {  CreationDate = orderDb.DateOfOrder, Id= orderDb.Id,  ProductsList = new List<Product>()});
+                }
+                return resultList;
+            }
+            else
+            {
+                return new List<OrderListItemVM>();
+            }
         }
+
 
     }
 }

@@ -10,7 +10,7 @@ namespace Shop.BLL.Interfaces
     interface IOrderItemService
     {
         bool CreateNewOrderItem(Guid productId, int count);
-        OrderItemVM GetOrderItemById(Guid id);
+       // OrderItemVM GetOrderItemById(Guid id);
         OrderItemVM UpdateOrderItem(Guid productId, Guid orderId, int coun);
         bool DeleteOrderItem(Guid id);
     }

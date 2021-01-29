@@ -14,5 +14,7 @@ namespace Shop.BLL.Interfaces
         ProductVM GetProductById(Guid id);
         ProductVM UpdateProduct(ProductVM product);
         bool DeleteProduct(Guid id);
+        List<ProductListItemVM> GetProductListFromShop();
+
     }
 }

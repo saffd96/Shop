@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.BLL.Infrastructure
 {
-    class CurrentOrder
+   public  class CurrentOrder
     {
         public static Guid Id { get; set; }
     }

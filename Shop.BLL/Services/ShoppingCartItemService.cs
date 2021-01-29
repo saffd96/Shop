@@ -5,13 +5,14 @@ using Shop.DAL;
 using Shop.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Shop.BLL.Services
 {
-    class ShoppingCartItemService : IShoppingCartItemService
+    public class ShoppingCartItemService : IShoppingCartItemService
     {
         private ShopDbModelContainer db;
 
@@ -26,10 +27,9 @@ namespace Shop.BLL.Services
             {
                 ShoppingCartItem shoppingCartItemDb = new ShoppingCartItem
                 {
-                    //ssss
                     ShoppingCartId = CurrentShoppingCartItem.ShoppingCartId,
                     Count = CurrentShoppingCartItem.Count,
-                    ProductID = CurrentShoppingCartItem.ProductId
+                    ProductId = CurrentShoppingCartItem.ProductId
                 };
 
                 db.ShoppingCartItems.Add(shoppingCartItemDb);
@@ -44,17 +44,73 @@ namespace Shop.BLL.Services
 
         public bool DeleteShoppingCartItem(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var shoppingCartItemDb = db.ShoppingCartItems.Find(id);
+                if (shoppingCartItemDb == null)
+                {
+                    throw new Exception("Продукт в корзине не найден");
+                }
+                else
+                {
+                    db.ShoppingCartItems.Remove(shoppingCartItemDb);
+                    db.SaveChanges();
+                    return true;
+                }
+
+            }
+            catch
+            {
+                throw new Exception("Ошибка удаления продукта из корзины.");
+            }
         }
 
         public ShoppingCartItemVM GetShoppingCartItemById(Guid id)
         {
-            throw new NotImplementedException();
+            var shoppingCartItemDb = db.ShoppingCartItems.Find(id);
+            if (shoppingCartItemDb == null)
+            {
+                throw new Exception("Продукт не найден");
+            }
+            else
+            {
+                return new ShoppingCartItemVM { Count = shoppingCartItemDb.Count, ProductId = shoppingCartItemDb.ProductId};
+            }
         }
 
-        public ShoppingCartItemVM UpdateShoppingCartItem(Guid productId, Guid shoppingCartId, int count)
+        public List<ShoppingCartItemVM> GetShoppingCartItemListByOrderId()
         {
-            throw new NotImplementedException();
+            var shoppingCartItemsList = db.ShoppingCartItems.Where(m => m.Id.Equals(CurrentOrder.Id)).ToList();
+            if (shoppingCartItemsList.Any())
+            {
+                var resultList = new List<ShoppingCartItemVM>();
+                foreach (var shoppingCartItemDb in shoppingCartItemsList)
+                {
+                    resultList.Add(new ShoppingCartItemVM { Count = shoppingCartItemDb.Count, ProductId = shoppingCartItemDb.ProductId });
+                }
+                return resultList;
+            }
+            else
+            {
+                return new List<ShoppingCartItemVM>();
+            }
+        }
+
+        public ShoppingCartItemVM UpdateShoppingCartItem(Guid id, Guid productId, int count)
+        {
+            var shoppingCartItemDb = db.ShoppingCartItems.Find(id);
+            if (shoppingCartItemDb == null)
+            {
+                throw new Exception("Продукт не найден");
+            }
+            else
+            {
+                shoppingCartItemDb.Count = count;
+                shoppingCartItemDb.ProductId = productId;
+                db.Entry(shoppingCartItemDb).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return new ShoppingCartItemVM { Count = shoppingCartItemDb.Count, ProductId = shoppingCartItemDb.ProductId };
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Shop.BLL.Interfaces
     {
         OrderVM CreateNewOrder(Guid buyerId);
         OrderVM GetOrderById(Guid id);
-        OrderVM UpdateOrder(Guid buyerId);
+        List<OrderListItemVM> GetOrdersListByUserId(Guid id);
         bool DeleteOrder(Guid id);
     }
 }

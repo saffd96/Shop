@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.BLL.VMs
 {
-    public class ProductVM
+    public class ProductListItemVM
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -12,8 +12,5 @@ namespace Shop.BLL.Infrastructure
         public static Guid ShoppingCartId { get; set; }
         public static Guid ProductId { get; set; }
         public static int Count { get; set; }
-
-
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Shop.BLL.VMs
 {
-    public class OrderVM
+    public class OrderListItemVM
     {
-        public Guid BuyerId { get; set; }
-        public DateTime DateOfOrder { get; set; }
         public Guid Id { get; set; }
+        public DateTime CreationDate { get; set; }
+        public List<Product> ProductsList { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Shop.Models
     {
         public System.Guid Id { get; set; }
         public System.Guid ShoppingCartId { get; set; }
-        public System.Guid ProductID { get; set; }
+        public System.Guid ProductId { get; set; }
         public int Count { get; set; }
     
         public virtual ShoppingCart ShoppingCart { get; set; }

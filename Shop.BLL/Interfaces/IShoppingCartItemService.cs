@@ -11,7 +11,8 @@ namespace Shop.BLL.Interfaces
     {
         bool CreateNewShoppingCartItem(Guid productId, int count);
         ShoppingCartItemVM GetShoppingCartItemById(Guid id);
-        ShoppingCartItemVM UpdateShoppingCartItem(Guid productId, Guid shoppingCartId, int count);
+        List<ShoppingCartItemVM> GetShoppingCartItemListByOrderId();
+        ShoppingCartItemVM UpdateShoppingCartItem(Guid id, Guid productId, int count);
         bool DeleteShoppingCartItem(Guid id);
     }
 }

@@ -11,7 +11,6 @@ namespace Shop.BLL.Interfaces
     {
         bool RegistNewManager(ManagerVM manager);
         bool LogInManager(string login, string passwordHash);
-        ManagerVM GetManagerById(Guid id);
         ManagerVM UpdateManager(ManagerVM manager);
         bool DeleteManager(Guid id);
     }

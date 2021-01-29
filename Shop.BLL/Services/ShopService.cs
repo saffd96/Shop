@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.BLL.Services
 {
-    class ShopService : IShopService
+    public class ShopService : IShopService
     {
         private ShopDbModelContainer db;
         public ShopService()
@@ -17,7 +17,7 @@ namespace Shop.BLL.Services
         }
         public void UpdateShop(string name, string description)
         {
-           // Shop shop = 
+            // Shop shop = 
         }
     }
 }

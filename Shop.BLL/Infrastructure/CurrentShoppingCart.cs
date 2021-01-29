@@ -8,5 +8,6 @@ namespace Shop.BLL.Infrastructure
 {
     class CurrentShoppingCart
     {
+        public static Guid Id { get; set; }
     }
 }
